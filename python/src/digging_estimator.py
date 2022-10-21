@@ -21,10 +21,10 @@ class Team:
 
 
 class TeamComposition:
-    day_team: Team = Team()
-    night_team: Team = Team()
-
-    total = 0
+    def __init__(self):
+        self.day_team: Team = Team()
+        self.night_team: Team = Team()
+        self.total = 0
 
 
 class DiggingEstimator:
