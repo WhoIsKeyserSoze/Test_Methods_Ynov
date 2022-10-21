@@ -17,4 +17,6 @@ def test_returns_0_for_0_meters_long_mountain() :
 
     estimator.get = MagicMock(return_value=[0, 3, 5.5, 7])
 
-    assert estimator.tunnel(0, 0, "granite") == 0
+    result = estimator.tunnel(0, 1, "granite")
+
+    assert result.total == 0
