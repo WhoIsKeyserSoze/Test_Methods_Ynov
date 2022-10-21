@@ -39,11 +39,32 @@ def test_returns_error_for_TunnelTooLongForDelayException() :
     with pytest.raises(TunnelTooLongForDelayException):
         estimator.tunnel(1000, 1, "granite")
 
-def test_returns_error_for_InvalidFormatException() :
+def test_returns_error_for_InvalidFormatException_none_int_value_length() :
     estimator = DiggingEstimator()
 
     estimator.get = MagicMock(return_value=[0, 3, 5.5, 7])
 
     with pytest.raises(InvalidFormatException):
-        estimator.tunnel(5.5, 1.2, "granite")
+        estimator.tunnel(5.5, 1, "granite")
+def test_returns_error_for_InvalidFormatException_none_int_value_days() :
+    estimator = DiggingEstimator()
 
+    estimator.get = MagicMock(return_value=[0, 3, 5.5, 7])
+
+    with pytest.raises(InvalidFormatException):
+        estimator.tunnel(5, 1.2, "granite")
+def test_returns_error_for_InvalidFormatException_negative_length() :
+    estimator = DiggingEstimator()
+
+    estimator.get = MagicMock(return_value=[0, 3, 5.5, 7])
+
+    with pytest.raises(InvalidFormatException):
+        estimator.tunnel(-5, 1, "granite")
+
+def test_returns_error_for_InvalidFormatException_negative_days() :
+    estimator = DiggingEstimator()
+
+    estimator.get = MagicMock(return_value=[0, 3, 5.5, 7])
+
+    with pytest.raises(InvalidFormatException):
+        estimator.tunnel(5, -1, "granite")
