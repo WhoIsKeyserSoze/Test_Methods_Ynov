@@ -12,4 +12,9 @@ def test_returns_as_doctor_Pockosky_says():
   assert result.total == 48
 
 
-def test_returns
+def test_returns_0_for_0_meters_long_mountain() :
+    estimator = DiggingEstimator()
+
+    estimator.get = MagicMock(return_value=[0, 3, 5.5, 7])
+
+    assert estimator.tunnel(0, 0, "granite") == 0
