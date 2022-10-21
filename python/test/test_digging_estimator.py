@@ -128,6 +128,8 @@ def test_returns_number_of_each_dwarf_nightteam_guard_managers():
     result = estimator.tunnel(28, 2, "granite")
 
     assert result.night_team.guard_managers == 2
+
+#----------------- Exception tests ------------------
 def test_returns_0_for_0_meters_long_mountain() :
     estimator = DiggingEstimator()
 
@@ -136,7 +138,6 @@ def test_returns_0_for_0_meters_long_mountain() :
     result = estimator.tunnel(0, 1, "granite")
 
     assert result.total == 0
-
 def test_returns_error_for_0_days() :
     estimator = DiggingEstimator()
 
@@ -144,7 +145,6 @@ def test_returns_error_for_0_days() :
 
     with pytest.raises(ZeroDivisionError):
         estimator.tunnel(0, 0, "granite")
-
 def test_returns_error_for_TunnelTooLongForDelayException() :
     estimator = DiggingEstimator()
 
@@ -152,7 +152,6 @@ def test_returns_error_for_TunnelTooLongForDelayException() :
 
     with pytest.raises(TunnelTooLongForDelayException):
         estimator.tunnel(1000, 1, "granite")
-
 def test_returns_error_for_InvalidFormatException_none_int_value_length() :
     estimator = DiggingEstimator()
 
