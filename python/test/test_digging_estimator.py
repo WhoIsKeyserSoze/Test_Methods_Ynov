@@ -1,6 +1,6 @@
 import pytest
 
-from src.digging_estimator import DiggingEstimator
+from src.digging_estimator import DiggingEstimator, TunnelTooLongForDelayException
 from unittest.mock import MagicMock
 
 
@@ -30,3 +30,12 @@ def test_returns_error_for_0_days() :
 
     with pytest.raises(ZeroDivisionError):
         estimator.tunnel(0, 0, "granite")
+
+def test_returns_error_for_TunnelTooLongForDelayException() :
+    estimator = DiggingEstimator()
+
+    estimator.get = MagicMock(return_value=[0, 3, 5.5, 7])
+
+    with pytest.raises(TunnelTooLongForDelayException):
+        estimator.tunnel(1000, 1, "granite")
+
