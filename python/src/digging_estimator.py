@@ -20,6 +20,9 @@ class Team:
         self.guard_managers = 0
         self.washers = 0
 
+    def get_nb_worker(self):
+        return self.miners+self.healers+self.smithies+self.lighters+self.inn_keepers+self.guards+self.guard_managers+self.washers
+
 
 class TeamComposition:
     def __init__(self):
@@ -86,7 +89,7 @@ class DiggingEstimator:
             if old_washers == nt.washers and old_guards == nt.guards and old_chief_guard == nt.guard_managers:
                 break
 
-        composition.total = dt.miners + dt.washers + dt.healers + dt.smithies + dt.inn_keepers + nt.miners + nt.washers + nt.healers + nt.smithies + nt.inn_keepers + nt.guards + nt.guard_managers + nt.lighters
+        composition.total = dt.get_nb_worker() + nt.get_nb_worker()
 
         return composition
 
