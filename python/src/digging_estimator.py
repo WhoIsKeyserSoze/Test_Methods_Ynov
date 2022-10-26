@@ -2,14 +2,14 @@ import math
 from enum import Enum
 
 class WORKER(Enum):
-    MINER = 1
-    HEALER = 2
-    SMITHIE = 3
-    LIGTHER = 4
-    INN_KEEPER = 5
-    GUARD = 6
-    GUARD_MANAGER = 7
-    WASHER = 8
+    MINERS = 1
+    HEALERS = 2
+    SMITHIES = 3
+    LIGHTERS = 4
+    INN_KEEPERS = 5
+    GUARDS = 6
+    GUARD_MANAGERS = 7
+    WASHERS = 8
 
 class TunnelTooLongForDelayException(Exception):
     pass
@@ -36,21 +36,21 @@ class Team:
     def add_worker(self, worker_type, nb_worker_to_add=1):
 
         match worker_type:
-            case WORKER.MINER:
+            case WORKER.MINERS:
                 self.miners += nb_worker_to_add
-            case WORKER.HEALER:
+            case WORKER.HEALERS:
                 self.miners += nb_worker_to_add
-            case WORKER.SMITHIE:
+            case WORKER.SMITHIES:
                 self.miners += nb_worker_to_add
-            case WORKER.LIGTHER:
+            case WORKER.LIGHTERS:
                 self.miners += nb_worker_to_add
-            case WORKER.INN_KEEPER:
+            case WORKER.INN_KEEPERS:
                 self.miners += nb_worker_to_add
-            case WORKER.GUARD:
+            case WORKER.GUARDS:
                 self.miners += nb_worker_to_add
-            case WORKER.GUARD_MANAGER:
+            case WORKER.GUARD_MANAGERS:
                 self.miners += nb_worker_to_add
-            case WORKER.WASHER:
+            case WORKER.WASHERS:
                 self.miners += nb_worker_to_add
             case _:
                 raise Exception("Not a valid worker type") 
