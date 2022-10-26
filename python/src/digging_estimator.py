@@ -56,6 +56,21 @@ class Team:
         else:
             raise Exception("Not a valid worker type")
 
+    def calculate_nb_washers_guard_and_guard_managers(self, nb_washers, nb_guards, nb_guard_managers):
+        new_nb_washers = math.ceil(
+            (self.miners + self.healers + self.smithies + self.inn_keepers + self.lighters + nb_guards +
+             nb_guard_managers) / 10)
+        new_nb_guards = math.ceil((self.miners + self.healers + self.smithies + self.lighters + new_nb_washers) / 3)
+        new_nb_guard_managers = math.ceil(new_nb_guards / 3)
+
+        if nb_washers == new_nb_washers \
+                and nb_guards == new_nb_guards \
+                and nb_guard_managers == new_nb_guard_managers:
+            return new_nb_washers, new_nb_guards, new_nb_guard_managers
+        else:
+            return self.calculate_nb_washers_guard_and_guard_managers(new_nb_washers, new_nb_guards,
+                                                                      new_nb_guard_managers)
+
 
 class TeamComposition:
     def __init__(self):
@@ -111,23 +126,10 @@ class DiggingEstimator:
                  NIGHT_TEAM.lighters) / 4.0) * 4
             NIGHT_TEAM.add_worker(WORKER.INN_KEEPERS, nb_inn_washers_to_add_for_night_team)
 
-        while True:
-            old_washers = NIGHT_TEAM.washers
-            old_guards = NIGHT_TEAM.guards
-            old_chief_guard = NIGHT_TEAM.guard_managers
-
-            NIGHT_TEAM.washers = math.ceil((
-                                                   NIGHT_TEAM.miners + NIGHT_TEAM.healers + NIGHT_TEAM.smithies +
-                                                   NIGHT_TEAM.inn_keepers + NIGHT_TEAM.lighters + NIGHT_TEAM.guards +
-                                                   NIGHT_TEAM.guard_managers) / 10.0)
-            NIGHT_TEAM.guards = math.ceil((
-                                                  NIGHT_TEAM.healers + NIGHT_TEAM.miners + NIGHT_TEAM.smithies +
-                                                  NIGHT_TEAM.lighters + NIGHT_TEAM.washers) / 3.0)
-
-            NIGHT_TEAM.guard_managers = math.ceil(NIGHT_TEAM.guards / 3.0)
-
-            if old_washers == NIGHT_TEAM.washers and old_guards == NIGHT_TEAM.guards and old_chief_guard == NIGHT_TEAM.guard_managers:
-                break
+        nb_washers, nb_guards, nb_guard_managers = NIGHT_TEAM.calculate_nb_washers_guard_and_guard_managers(0, 0, 0)
+        NIGHT_TEAM.add_worker(WORKER.WASHERS, nb_washers)
+        NIGHT_TEAM.add_worker(WORKER.GUARDS, nb_guards)
+        NIGHT_TEAM.add_worker(WORKER.GUARD_MANAGERS, nb_guard_managers)
 
         composition.total = DAY_TEAM.get_nb_worker() + NIGHT_TEAM.get_nb_worker()
 
