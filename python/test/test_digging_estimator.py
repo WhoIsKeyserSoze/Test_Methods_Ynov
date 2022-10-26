@@ -181,3 +181,10 @@ def test_returns_error_for_InvalidFormatException_negative_days() :
 
     with pytest.raises(InvalidFormatException):
         estimator.tunnel(5, -1, "granite")
+
+def test_return_error_when_not_mokked() :
+    estimator = DiggingEstimator()
+    with pytest.raises(Exception):
+        estimator.tunnel(28, 2, "granite")
+
+        
