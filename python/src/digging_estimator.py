@@ -2,14 +2,14 @@ import math
 from enum import Enum
 
 class WORKER(Enum):
-    MINER = 1
-    HEALER = 2
-    SMITHIE = 3
-    LIGTHER = 4
-    INN_KEEPER = 5
-    GUARD = 6
-    GUARD_MANAGER = 7
-    WASHER = 8
+    MINERS = 1
+    HEALERS = 2
+    SMITHIES = 3
+    LIGHTERS = 4
+    INN_KEEPERS = 5
+    GUARDS = 6
+    GUARD_MANAGERS = 7
+    WASHERS = 8
 
 class TunnelTooLongForDelayException(Exception):
     pass
@@ -35,25 +35,24 @@ class Team:
 
     def add_worker(self, worker_type, nb_worker_to_add=1):
 
-        match worker_type:
-            case WORKER.MINER:
-                self.miners += nb_worker_to_add
-            case WORKER.HEALER:
-                self.miners += nb_worker_to_add
-            case WORKER.SMITHIE:
-                self.miners += nb_worker_to_add
-            case WORKER.LIGTHER:
-                self.miners += nb_worker_to_add
-            case WORKER.INN_KEEPER:
-                self.miners += nb_worker_to_add
-            case WORKER.GUARD:
-                self.miners += nb_worker_to_add
-            case WORKER.GUARD_MANAGER:
-                self.miners += nb_worker_to_add
-            case WORKER.WASHER:
-                self.miners += nb_worker_to_add
-            case _:
-                raise Exception("Not a valid worker type") 
+        if worker_type == WORKER.MINERS:
+            self.miners += nb_worker_to_add
+        elif worker_type == WORKER.HEALERS:
+            self.miners += nb_worker_to_add
+        elif worker_type == WORKER.SMITHIES:
+            self.miners += nb_worker_to_add
+        elif worker_type == WORKER.LIGHTERS:
+            self.miners += nb_worker_to_add
+        elif worker_type == WORKER.INN_KEEPERS:
+            self.miners += nb_worker_to_add
+        elif worker_type == WORKER.GUARDS:
+            self.miners += nb_worker_to_add
+        elif worker_type == WORKER.GUARD_MANAGERS:
+            self.miners += nb_worker_to_add
+        elif worker_type == WORKER.WASHERS:
+            self.miners += nb_worker_to_add
+        else:
+            raise Exception("Not a valid worker type") 
 
 
 
