@@ -80,8 +80,8 @@ class TeamComposition:
 
 
 class DiggingEstimator:
-    def tunnel(self, length, days, rock_type):
-        dig_per_rotation = self.get(rock_type)
+    def create_team(self, length, days, rock_type):
+        dig_per_rotation = self.ask_api_for_dwarfs_mining_distance_per_rock_type(rock_type)
         max_dig_per_rotation = dig_per_rotation[len(dig_per_rotation) - 1]
         max_dig_per_day = 2 * max_dig_per_rotation
 
@@ -102,40 +102,40 @@ class DiggingEstimator:
                 if dig_per_rotation[i] + max_dig_per_rotation < math.floor(length / days):
                     composition.night_team.miners += 1
 
-        DAY_TEAM = composition.day_team
-        NIGHT_TEAM = composition.night_team
+        day_team = composition.day_team
+        night_team = composition.night_team
 
-        if DAY_TEAM.miners > 0:
-            DAY_TEAM.add_worker(WORKER.HEALERS)
-            DAY_TEAM.add_worker(WORKER.SMITHIES, 2)
+        if day_team.miners > 0:
+            day_team.add_worker(WORKER.HEALERS)
+            day_team.add_worker(WORKER.SMITHIES, 2)
 
-            nb_inn_keepers_to_add = math.ceil((DAY_TEAM.miners + DAY_TEAM.healers + DAY_TEAM.smithies) / 4.0) * 4
-            DAY_TEAM.add_worker(WORKER.INN_KEEPERS, nb_inn_keepers_to_add)
+            nb_inn_keepers_to_add = math.ceil((day_team.miners + day_team.healers + day_team.smithies) / 4.0) * 4
+            day_team.add_worker(WORKER.INN_KEEPERS, nb_inn_keepers_to_add)
 
-            nb_inn_washers_to_add = math.ceil((DAY_TEAM.miners + DAY_TEAM.healers + DAY_TEAM.smithies +
-                                               DAY_TEAM.inn_keepers) / 10.0)
-            DAY_TEAM.add_worker(WORKER.WASHERS, nb_inn_washers_to_add)
+            nb_inn_washers_to_add = math.ceil((day_team.miners + day_team.healers + day_team.smithies +
+                                               day_team.inn_keepers) / 10.0)
+            day_team.add_worker(WORKER.WASHERS, nb_inn_washers_to_add)
 
-        if NIGHT_TEAM.miners > 0:
-            NIGHT_TEAM.add_worker(WORKER.HEALERS)
-            NIGHT_TEAM.add_worker(WORKER.SMITHIES, 2)
-            NIGHT_TEAM.add_worker(WORKER.LIGHTERS, NIGHT_TEAM.miners + 1)
+        if night_team.miners > 0:
+            night_team.add_worker(WORKER.HEALERS)
+            night_team.add_worker(WORKER.SMITHIES, 2)
+            night_team.add_worker(WORKER.LIGHTERS, night_team.miners + 1)
 
             nb_inn_washers_to_add_for_night_team = math.ceil(
-                (NIGHT_TEAM.miners + NIGHT_TEAM.healers + NIGHT_TEAM.smithies +
-                 NIGHT_TEAM.lighters) / 4.0) * 4
-            NIGHT_TEAM.add_worker(WORKER.INN_KEEPERS, nb_inn_washers_to_add_for_night_team)
+                (night_team.miners + night_team.healers + night_team.smithies +
+                 night_team.lighters) / 4.0) * 4
+            night_team.add_worker(WORKER.INN_KEEPERS, nb_inn_washers_to_add_for_night_team)
 
-        nb_washers, nb_guards, nb_guard_managers = NIGHT_TEAM.calculate_nb_washers_guard_and_guard_managers(0, 0, 0)
-        NIGHT_TEAM.add_worker(WORKER.WASHERS, nb_washers)
-        NIGHT_TEAM.add_worker(WORKER.GUARDS, nb_guards)
-        NIGHT_TEAM.add_worker(WORKER.GUARD_MANAGERS, nb_guard_managers)
+        nb_washers, nb_guards, nb_guard_managers = night_team.calculate_nb_washers_guard_and_guard_managers(0, 0, 0)
+        night_team.add_worker(WORKER.WASHERS, nb_washers)
+        night_team.add_worker(WORKER.GUARDS, nb_guards)
+        night_team.add_worker(WORKER.GUARD_MANAGERS, nb_guard_managers)
 
-        composition.total = DAY_TEAM.get_nb_worker() + NIGHT_TEAM.get_nb_worker()
+        composition.total = day_team.get_nb_worker() + night_team.get_nb_worker()
 
         return composition
 
-    def get(self, rock_type):
+    def ask_api_for_dwarfs_mining_distance_per_rock_type(self, rock_type):
         # for example for granite it returns [0, 3, 5.5, 7]
         # if you put 0 dwarf, you dig 0m / d / team
         # if you put 1 dwarf, you dig 3m / d / team
