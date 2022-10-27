@@ -1,6 +1,9 @@
 import pytest
 
-from src.digging_estimator import DiggingEstimator, TunnelTooLongForDelayException, InvalidFormatException
+from src.digging_estimator import DiggingEstimator, \
+    TunnelTooLongForDelayException, \
+    InvalidFormatException, \
+    ApiErrorException
 from unittest.mock import MagicMock
 
 
@@ -337,13 +340,13 @@ def test_returns_error_for_InvalidFormatException_negative_days() :
 
 def test_return_error_when_rock_type_api_not_mokked() :
     estimator = DiggingEstimator()
-    with pytest.raises(Exception):
+    with pytest.raises(ApiErrorException):
         estimator.create_team(28, 2, "granite")
 
 def test_return_error_when_goblin_api_not_mokked() :
     estimator = DiggingEstimator()
     estimator.ask_api_for_dwarfs_mining_distance_per_rock_type = MagicMock(return_value=[0, 3, 5.5, 7])
-    with pytest.raises(Exception):
+    with pytest.raises(ApiErrorException):
         estimator.create_team(28, 2, "granite", "moria's mine")
 
         

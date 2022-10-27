@@ -21,6 +21,8 @@ class TunnelTooLongForDelayException(Exception):
 class InvalidFormatException(Exception):
     pass
 
+class ApiErrorException(Exception):
+    pass
 
 class Team:
     def __init__(self):
@@ -166,7 +168,7 @@ class DiggingEstimator:
         # so a day team on 2 miners and a night team of 1 miner dig 8.5 m / d
         url = "dtp://research.vin.co/digging-rate/" + rock_type
         print("Trying to fetch" + url)
-        raise Exception("Does not work in test mode")
+        raise ApiErrorException("Does not work in test mode")
 
     def ask_api_presence_of_goblins(self, location):
         # for example for "safe_zone" it returns False
@@ -176,4 +178,4 @@ class DiggingEstimator:
         else:
             url = "dtp://research.vin.co/are-there-goblins/" + location
             print("Trying to fetch" + url)
-            raise Exception("Does not work in test mode")
+            raise ApiErrorException("Does not work in test mode")
