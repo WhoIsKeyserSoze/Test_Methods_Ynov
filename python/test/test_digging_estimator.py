@@ -71,6 +71,15 @@ def test_returns_number_of_each_dwarf_dayteam_guard_managers():
 
     assert result.day_team.guard_managers == 0
 
+def test_returns_number_of_each_dwarf_dayteam_protectors():
+    estimator = DiggingEstimator()
+
+    estimator.ask_api_for_dwarfs_mining_distance_per_rock_type = MagicMock(return_value=[0, 3, 5.5, 7])
+
+    result = estimator.create_team(28, 2, "granite")
+
+    assert result.day_team.protectors == 0
+
 # ---------------------- Night team --------------------
 def test_returns_number_of_each_dwarf_nightteam_miners():
     estimator = DiggingEstimator()
@@ -128,6 +137,15 @@ def test_returns_number_of_each_dwarf_nightteam_guard_managers():
     result = estimator.create_team(28, 2, "granite")
 
     assert result.night_team.guard_managers == 2
+
+def test_returns_number_of_each_dwarf_nightteam_protectors():
+    estimator = DiggingEstimator()
+
+    estimator.ask_api_for_dwarfs_mining_distance_per_rock_type = MagicMock(return_value=[0, 3, 5.5, 7])
+
+    result = estimator.create_team(28, 2, "granite")
+
+    assert result.night_team.protectors == 0
 
 #----------------- Exception tests ------------------
 def test_returns_0_for_0_meters_long_mountain() :
