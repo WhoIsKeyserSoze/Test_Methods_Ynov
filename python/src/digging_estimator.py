@@ -80,7 +80,7 @@ class TeamComposition:
 
 
 class DiggingEstimator:
-    def create_team(self, length, days, rock_type):
+    def create_team(self, length, days, rock_type, mining_location="safe_zone"):
         dig_per_rotation = self.ask_api_for_dwarfs_mining_distance_per_rock_type(rock_type)
         max_dig_per_rotation = dig_per_rotation[len(dig_per_rotation) - 1]
         max_dig_per_day = 2 * max_dig_per_rotation
@@ -90,6 +90,7 @@ class DiggingEstimator:
         if math.floor(length / days) > max_dig_per_day:
             raise TunnelTooLongForDelayException()
 
+        presence_of_goblins = self.ask_api_presence_of_goblins(mining_location)
         composition = TeamComposition()
 
         # Miners
@@ -144,3 +145,13 @@ class DiggingEstimator:
         url = "dtp://research.vin.co/digging-rate/" + rock_type
         print("Trying to fetch" + url)
         raise Exception("Does not work in test mode")
+
+    def ask_api_presence_of_goblins(self, location):
+        # for example for "safe_zone" it returns False
+        # for example, for "moria's mine" it returns True
+        if location == "safe_zone":
+            return False
+        else:
+            url = "dtp://research.vin.co/are-there-goblins/" + location
+            print("Trying to fetch" + url)
+            raise Exception("Does not work in test mode")
