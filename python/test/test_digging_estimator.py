@@ -54,6 +54,15 @@ def test_returns_number_of_each_dwarf_dayteam_inn_keepers():
     result = estimator.create_team(28, 2, "granite")
 
     assert result.day_team.inn_keepers == 8
+
+def test_returns_number_of_each_dwarf_dayteam_washers():
+    estimator = DiggingEstimator()
+
+    estimator.ask_api_for_dwarfs_mining_distance_per_rock_type = MagicMock(return_value=[0, 3, 5.5, 7])
+
+    result = estimator.create_team(28, 2, "granite")
+
+    assert result.day_team.washers == 2
 def test_returns_number_of_each_dwarf_dayteam_guards():
     estimator = DiggingEstimator()
 
@@ -121,6 +130,15 @@ def test_returns_number_of_each_dwarf_nightteam_inn_keepers():
     result = estimator.create_team(28, 2, "granite")
 
     assert result.night_team.inn_keepers == 12
+
+def test_returns_number_of_each_dwarf_nightteam_washers():
+    estimator = DiggingEstimator()
+
+    estimator.ask_api_for_dwarfs_mining_distance_per_rock_type = MagicMock(return_value=[0, 3, 5.5, 7])
+
+    result = estimator.create_team(28, 2, "granite")
+
+    assert result.night_team.washers == 3
 def test_returns_number_of_each_dwarf_nightteam_guards():
     estimator = DiggingEstimator()
 
@@ -146,6 +164,111 @@ def test_returns_number_of_each_dwarf_nightteam_protectors():
     result = estimator.create_team(28, 2, "granite")
 
     assert result.night_team.protectors == 0
+
+#------- Expedition team in unsafe zone test --------
+
+def test_returns_number_of_each_dwarf_dayteam_lighters():
+    estimator = DiggingEstimator()
+
+    estimator.ask_api_for_dwarfs_mining_distance_per_rock_type = MagicMock(return_value=[0, 3, 5.5, 7])
+
+    result = estimator.create_team(28, 2, "granite", "moria's mine")
+
+    assert result.day_team.lighters == 0
+def test_returns_number_of_each_dwarf_dayteam_inn_keepers():
+    estimator = DiggingEstimator()
+
+    estimator.ask_api_for_dwarfs_mining_distance_per_rock_type = MagicMock(return_value=[0, 3, 5.5, 7])
+
+    result = estimator.create_team(28, 2, "granite", "moria's mine")
+
+    assert result.day_team.inn_keepers == 8
+
+def test_returns_number_of_each_dwarf_dayteam_washers():
+    estimator = DiggingEstimator()
+
+    estimator.ask_api_for_dwarfs_mining_distance_per_rock_type = MagicMock(return_value=[0, 3, 5.5, 7])
+
+    result = estimator.create_team(28, 2, "granite", "moria's mine")
+
+    assert result.day_team.washers == 2
+def test_returns_number_of_each_dwarf_dayteam_guards():
+    estimator = DiggingEstimator()
+
+    estimator.ask_api_for_dwarfs_mining_distance_per_rock_type = MagicMock(return_value=[0, 3, 5.5, 7])
+
+    result = estimator.create_team(28, 2, "granite", "moria's mine")
+
+    assert result.day_team.guards == 0
+def test_returns_number_of_each_dwarf_dayteam_guard_managers():
+    estimator = DiggingEstimator()
+
+    estimator.ask_api_for_dwarfs_mining_distance_per_rock_type = MagicMock(return_value=[0, 3, 5.5, 7])
+
+    result = estimator.create_team(28, 2, "granite", "moria's mine")
+
+    assert result.day_team.guard_managers == 0
+
+def test_returns_number_of_each_dwarf_dayteam_protectors():
+    estimator = DiggingEstimator()
+
+    estimator.ask_api_for_dwarfs_mining_distance_per_rock_type = MagicMock(return_value=[0, 3, 5.5, 7])
+
+    result = estimator.create_team(28, 2, "granite", "moria's mine")
+
+    assert result.day_team.protectors == 0
+
+def test_returns_number_of_each_dwarf_nightteam_lighters():
+    estimator = DiggingEstimator()
+
+    estimator.ask_api_for_dwarfs_mining_distance_per_rock_type = MagicMock(return_value=[0, 3, 5.5, 7])
+
+    result = estimator.create_team(28, 2, "granite", "moria's mine")
+
+    assert result.night_team.lighters == 4
+def test_returns_number_of_each_dwarf_nightteam_inn_keepers():
+    estimator = DiggingEstimator()
+
+    estimator.ask_api_for_dwarfs_mining_distance_per_rock_type = MagicMock(return_value=[0, 3, 5.5, 7])
+
+    result = estimator.create_team(28, 2, "granite", "moria's mine")
+
+    assert result.night_team.inn_keepers == 12
+
+def test_returns_number_of_each_dwarf_nightteam_washers():
+    estimator = DiggingEstimator()
+
+    estimator.ask_api_for_dwarfs_mining_distance_per_rock_type = MagicMock(return_value=[0, 3, 5.5, 7])
+
+    result = estimator.create_team(28, 2, "granite", "moria's mine")
+
+    assert result.night_team.washers == 3
+def test_returns_number_of_each_dwarf_nightteam_guards():
+    estimator = DiggingEstimator()
+
+    estimator.ask_api_for_dwarfs_mining_distance_per_rock_type = MagicMock(return_value=[0, 3, 5.5, 7])
+
+    result = estimator.create_team(28, 2, "granite", "moria's mine")
+
+    assert result.night_team.guards == 5
+def test_returns_number_of_each_dwarf_nightteam_guard_managers():
+    estimator = DiggingEstimator()
+
+    estimator.ask_api_for_dwarfs_mining_distance_per_rock_type = MagicMock(return_value=[0, 3, 5.5, 7])
+
+    result = estimator.create_team(28, 2, "granite", "moria's mine")
+
+    assert result.night_team.guard_managers == 2
+
+def test_returns_number_of_each_dwarf_nightteam_protectors():
+    estimator = DiggingEstimator()
+
+    estimator.ask_api_for_dwarfs_mining_distance_per_rock_type = MagicMock(return_value=[0, 3, 5.5, 7])
+
+    result = estimator.create_team(28, 2, "granite", "moria's mine")
+
+    assert result.night_team.protectors == 0
+
 
 #----------------- Exception tests ------------------
 def test_returns_0_for_0_meters_long_mountain() :
